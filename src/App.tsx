@@ -1,25 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { AppRoutes } from './components/AppRoutes';
+
+const theme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
+  fonts: {
+    heading: 'Pretendard, sans-serif',
+    body: 'Pretendard, sans-serif',
+  },
+  colors: {
+    brand: {
+      500: '#7A5AF8',
+      600: '#6B4CE6',
+    }
+  },
+  styles: {
+    global: {
+      body: {
+        bg: 'gray.900',
+        color: 'white',
+      }
+    }
+  }
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider theme={theme}>
+      <AuthProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </AuthProvider>
+    </ChakraProvider>
   );
 }
 
